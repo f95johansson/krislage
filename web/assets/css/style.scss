@@ -1,0 +1,38 @@
+---
+---
+@charset "utf-8";
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,400italic);
+
+/**
+ * Variables
+ */
+$font-family: "Open Sans", sans-serif;
+$font-weight:       400;
+$font-size-base:   14px;
+$font-size-small:  11px;
+$base-line-height:  1.5;
+
+$spacing-unit:     30px;
+
+$text-color:       #111;
+$background-color: #fdfdfd;
+$brand-color:      #2a7ae2;
+
+$grey-color:       #828282;
+$grey-color-light: lighten($grey-color, 40%);
+$grey-color-dark:  darken($grey-color, 25%);
+
+// Width of the content area
+$content-width:    960px;
+
+
+
+
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+        "base",
+        "layout"
+;
