@@ -16,8 +16,8 @@ dl, dd, ol, ul, figure {
  */
 body {
   font: 400 14px "Open Sans", sans-serif;
-  color: #111111;
-  background-color: #fdfdfd;
+  color: #eeeeee;
+  background-color: #141414;
   width: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
@@ -75,7 +75,7 @@ a {
   a:visited {
     color: #1756a9; }
   a:hover {
-    color: #111111;
+    color: #eeeeee;
     text-decoration: underline; }
 
 /**
@@ -126,7 +126,7 @@ pre {
 /**
  * Clearfix
  */
-.wrapper:after {
+.wrapper:after, .status-page:after {
   content: "";
   display: table;
   clear: both; }
@@ -148,24 +148,22 @@ pre {
 .status-page {
   margin: 80px auto;
   width: 960px; }
-  .status-page .status-title {
-    margin-left: 100px; }
-  .status-page .status-text {
-    display: inline;
-    margin: 80px; }
-  .status-page .map {
-    width: 230px;
+  .status-page .status-map {
     float: left; }
-  .status-page .other-events {
-    margin: 160px; }
+    .status-page .status-map .status-title {
+      color: #fa9f42; }
+  .status-page .status-rapport {
+    float: left;
+    margin: 80px; }
+    .status-page .status-rapport .rapported-near-you {
+      color: #fa9f42; }
+    .status-page .status-rapport .other-events {
+      margin-top: 80px; }
+      .status-page .status-rapport .other-events .rapported-other {
+        color: #fa9f42;
+        opacity: .4; }
 
 #map {
   width: 500px;
   height: 400px;
   background-color: gray; }
-
-/**
- * Timeline
- */
-.timeline {
-  background: #6a6a6a; }
