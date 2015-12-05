@@ -14,9 +14,10 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-    font: $base-font-weight base-font-size $base-font-family;
+    font:$font-weight $font-size-base $font-family;
     color: $text-color;
     background-color: $background-color;
+    width: 100%;
     -webkit-text-size-adjust: 100%;
     -webkit-font-feature-settings: "kern" 1;
     -moz-font-feature-settings: "kern" 1;
@@ -57,7 +58,7 @@ figure > img {
 }
 
 figcaption {
-    font-size: $small-font-size;
+    font-size: $font-size-small;
 }
 
 
@@ -82,7 +83,7 @@ li {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
-    font-weight: $base-font-weight;
+    font-weight:$font-weight;
 }
 
 
