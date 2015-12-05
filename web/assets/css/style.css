@@ -159,6 +159,11 @@ pre {
   .status-page .other-events {
     margin: 160px; }
 
+#map {
+  width: 500px;
+  height: 400px;
+  background-color: gray; }
+
 /**
  * Timeline
  */
