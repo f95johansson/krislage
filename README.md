@@ -1,2 +1,2 @@
 # outrageous-kiwi
-Natur catastrophe handling concept
+Nature catastrophe handling concept
