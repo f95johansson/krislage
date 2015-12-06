@@ -8,6 +8,8 @@
     android:background="@color/colorBackground"
     tools:context="com.uniaden.hackathon.outragous_kiwi.outragous_kiwi.MainActivity">
 
+    <include layout="@layout/content_inputfield" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,5 +39,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/vitt_kors" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

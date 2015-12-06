@@ -17,6 +17,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,10 +29,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 
 import android.util.Base64;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         mMessenger = new Messenger(new IncomingHandler());
         isBound = false;
         super.onCreate(savedInstanceState);
@@ -93,25 +98,6 @@ public class MainActivity extends AppCompatActivity{
                 }
 
                 dispatchTakePictureIntent();
-
-
-                /*
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = new File(Environment.getExternalStorageDirectory(),
-                        "MyPhoto.jpg");
-                outPutfileUri = Uri.fromFile(file);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri);
-                startActivityForResult(intent, 1);
-
-
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }*/
-
-
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
     }
@@ -161,9 +147,6 @@ public class MainActivity extends AppCompatActivity{
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
-        //Uri contentUri = Uri.fromFile(f);
-        //mediaScanIntent.setData(contentUri);
-        //this.sendBroadcast(mediaScanIntent);
 
         String imageDataString = "";
         try {
@@ -187,25 +170,16 @@ public class MainActivity extends AppCompatActivity{
 
 
         EventInformation event = new EventInformation();
-        event.setText("This is a funny discription");
+        event.setText("#Groupie");
         event.setPhoto(imageDataString);
         Bundle b = new Bundle();
         b.putParcelable(Codes.EVENT_DATA, event);
 
+        LinearLayout inputContent = (LinearLayout)findViewById(R.id.inputfield);
+        inputContent.setBackgroundColor(getColor(R.color.colorBackground));
+
         sendMsg(Codes.SEND_DATA_TO_SERVER, b);
 
-        /*
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(f.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String lat = ExifInterface.TAG_GPS_LATITUDE;
-        String lat_data = exif.getAttribute(lat);
-
-        System.out.println(lat_data);
-        */
     }
 
     /**
@@ -362,6 +336,9 @@ public class MainActivity extends AppCompatActivity{
         private static final String ARG_SECTION_NUMBER = "section_number";
         private int section;
 
+        public PlaceholderFragment() {
+        }
+
         public PlaceholderFragment(int section) {
             this.section = section;
         }
@@ -391,8 +368,11 @@ public class MainActivity extends AppCompatActivity{
                 rootView = inflater.inflate(R.layout.fragment_page_1, container, false);
             } else if (section == 2){
                 rootView = inflater.inflate(R.layout.fragment_page_2, container, false);
+                ListView list = (ListView)rootView.findViewById(R.id.listView);
+                list.setAdapter(new LiveFeedAdapter(getContext()));
+
             } else if (section == 3){
-                rootView = inflater.inflate(R.layout.fragment_page_1, container, false);
+                rootView = inflater.inflate(R.layout.fragment_page_3, container, false);
             }
 
             return rootView;
