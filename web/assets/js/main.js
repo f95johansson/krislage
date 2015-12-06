@@ -1,16 +1,14 @@
-var reader = new FileReader();
+function recieveServerData() {
+    $.get( "../server/data" , function(data){
+        var lines = data.split('\n');
+        if (lines.length > registeredReports.length) {
+            for (var i = registeredReports.length; i < lines.length; ++i) {
+                registeredReports.push(JSON.stringify(lines[i]));
+            };
+        };
+    });
+}
 
-reader.onload = function(e) {
-    var lines = reader.result.split('\n');
-    for(var line = 0; line < lines.length; line++){
-      console.log(lines[line]);
-    }
-  //registeredReports.push(JSON.parse(text));
-};
+setInterval(recieveServerData, 2000);
 
-var file = new File("../server/data");
-reader.readAsText(file);
-
-for (var i = registeredReports.length - 1; i >= 0; i--) {
-    console.log(registeredReports[i]);
-};
+setTimeout(placeMarkersOnMap, 3000);
