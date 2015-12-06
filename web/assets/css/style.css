@@ -143,6 +143,18 @@ pre {
     fill: #828282; }
 
 /**
+ * Header
+ */
+header {
+  margin: 20px;
+  margin-left: 80px; }
+  header h1 {
+    display: inline; }
+  header .logo {
+    width: 80px;
+    display: inline-block; }
+
+/**
  * Status Page
  */
 .status-page {
@@ -152,6 +164,8 @@ pre {
     float: left; }
     .status-page .status-map .status-title {
       color: #fa9f42; }
+    .status-page .status-map .map {
+      width: 210px; }
   .status-page .status-rapport {
     float: left;
     margin: 80px; }

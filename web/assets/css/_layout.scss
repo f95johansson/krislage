@@ -1,4 +1,22 @@
 /**
+ * Header
+ */
+header {
+  
+  margin: 20px;
+  margin-left: 80px;
+
+  h1 {
+    display: inline;
+  }
+
+  .logo {
+    width: 80px;
+    display: inline-block;
+  } 
+}
+
+/**
  * Status Page
  */
 .status-page {
@@ -11,6 +29,10 @@
   
     .status-title {
       color: $accent-color;
+    }
+    
+    .map {
+      width: 210px;
     }
   }
   
