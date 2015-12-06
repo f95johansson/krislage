@@ -8,6 +8,8 @@ public class Codes {
     public static final int UNREG_CLIENT            = 2;
     public static final int REG_CLIENT_SUCCESS      = 3;
     public static final int SEND_DATA_TO_SERVER     = 10;
+    public static final int UNABLE_TO_SEND_DATA     = 11;
+
 
     public static final int CAMERA_REQUEST          = 100;
 

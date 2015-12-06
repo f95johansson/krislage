@@ -9,11 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.uniaden.hackathon.outragous_kiwi.outragous_kiwi.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".TextInputActivity"
+    tools:showIn="@layout/activity_textinput_data">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/frontpage_app"/>
 </RelativeLayout>
