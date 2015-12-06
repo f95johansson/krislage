@@ -6,13 +6,17 @@ class ClientThread:
     def run(self):
         run = True
         while run:
-            data = self.socket.recv(1024) #might have to be increased
+            data = self.socket.recv(65535)
             if data:
                 with open("data", "a") as f:
                     print 'recieved data of size', len(data)
-                    data = data + '\n'
-                    f.write(data)
-                    f.close()
+                    if data[len(data)-1] == '}':
+                        data = data + '\n'
+                        f.write(data)
+                        f.close()
+                    else:
+                        f.write(data)
+                        f.close() 
             else:
                 run = False
 

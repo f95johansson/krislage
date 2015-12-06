@@ -2,13 +2,20 @@ function recieveServerData() {
     $.get( "../server/data" , function(data){
         var lines = data.split('\n');
         if (lines.length > registeredReports.length) {
-            for (var i = registeredReports.length; i < lines.length; ++i) {
-                registeredReports.push(JSON.stringify(lines[i]));
+            for (var i = registeredReports.length; i < lines.length-1; ++i) {
+                registeredReports.push(jQuery.parseJSON(lines[i]));
             };
         };
     });
 }
 
+function parseImage(imgString) {
+    return "<img alt='' class='reportImage' src='data:image/jpeg;base64,"+ imgString+ "'/>";
+}
+function createContentString(descriptionString, timeStamp, imgString) {
+    return "Description: "+descriptionString+"\n"+"Time: "+timeStamp+"\n"+imgString;
+}
+
 setInterval(recieveServerData, 2000);
 
-setTimeout(placeMarkersOnMap, 3000);
+setInterval(placeMarkersOnMap, 3000);
