@@ -17,7 +17,7 @@ dl, dd, ol, ul, figure {
 body {
   font: 400 14px "Open Sans", sans-serif;
   color: #eeeeee;
-  background-color: #141414;
+  background-color: #263238;
   width: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-font-feature-settings: "kern" 1;
@@ -178,6 +178,13 @@ header {
         opacity: .4; }
 
 #map {
-  width: 500px;
-  height: 400px;
+  position: absolute;
+  z-index: 10;
+  top: 93px;
+  left: 152px;
+  width: 434px;
+  height: 266px;
   background-color: gray; }
+
+#totally-calid-coding {
+  position: absolute; }
