@@ -29,7 +29,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 400 14px "Open Sans", serif;
+  font: 400 14px "DINCond-Regular", serif;
   color: #eeeeee;
   background-color: #263238;
   width: 100%;
@@ -199,6 +199,13 @@ header {
   width: 434px;
   height: 266px;
   background-color: gray; }
+  #map img {
+    width: 100px;
+    float: right; }
+  #map p {
+    color: black;
+    float: left;
+    width: 200px; }
 
 #totally-calid-coding {
   position: absolute; }

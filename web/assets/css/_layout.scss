@@ -64,6 +64,17 @@ header {
   width: 434px;
   height: 266px;
   background-color: gray;
+  
+  img {
+    width: 100px;
+    float: right;
+  }
+  
+  p {
+    color: black;
+    float: left;
+    width: 200px;
+  }
 }
 
 

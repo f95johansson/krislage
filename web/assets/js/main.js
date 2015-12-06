@@ -13,7 +13,7 @@ function parseImage(imgString) {
     return "<img alt='' class='reportImage' src='data:image/jpeg;base64,"+ imgString+ "'/>";
 }
 function createContentString(descriptionString, timeStamp, imgString) {
-    return "Description: "+descriptionString+"\n"+"Time: "+timeStamp+"\n"+imgString;
+    return "<p><b>Description:</b> "+descriptionString+"<br>"+"<b>Time:</b> "+timeStamp+"</p>\n"+imgString;
 }
 
 setInterval(recieveServerData, 2000);
