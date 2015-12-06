@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.Parcelable;
 import android.os.RemoteException;
 
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class ServerComService extends Service {
     private static Messenger mMessenger;
     private static ArrayList<Messenger> mClients = new ArrayList<Messenger>();
     private SendUIMsg msgSender;
+    private NetworkCom network;
 
 
     public ServerComService() {
         mMessenger = new Messenger(new ParseUIMsg());
         msgSender = new SendUIMsg();
+        network = new NetworkCom();
     }
 
     @Override
@@ -39,14 +42,14 @@ public class ServerComService extends Service {
             switch (msg.what){
                 case Codes.REG_CLIENT:
                     mClients.add(msg.replyTo);
-                    System.out.println("REGISTERING CLIENT");
                     msgSender.sendMsg(Codes.REG_CLIENT_SUCCESS);
                     break;
                 case Codes.UNREG_CLIENT:
                     mClients.remove(msg.replyTo);
                     break;
                 case Codes.SEND_DATA_TO_SERVER:
-
+                    EventInformation info = msg.getData().getParcelable(Codes.EVENT_DATA);
+                    network.sendMessage(info);
                     break;
             }
 
