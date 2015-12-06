@@ -54,8 +54,34 @@ header {
     }
   }
 }
+
+
 #map {
-  width: 500px;
-  height: 400px;
+  position: absolute;
+  z-index: 10;
+  top: 93px;
+  left: 152px;
+  width: 434px;
+  height: 266px;
   background-color: gray;
+  
+  img {
+    width: 100px;
+    float: right;
+  }
+  
+  p {
+    color: black;
+    float: left;
+    width: 200px;
+  }
+}
+
+
+
+
+
+
+#totally-calid-coding {
+  position: absolute;
 }
