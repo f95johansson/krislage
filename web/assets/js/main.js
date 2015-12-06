@@ -1,16 +1,21 @@
-var reader = new FileReader();
+function recieveServerData() {
+    $.get( "../server/data" , function(data){
+        var lines = data.split('\n');
+        if (lines.length > registeredReports.length) {
+            for (var i = registeredReports.length; i < lines.length-1; ++i) {
+                registeredReports.push(jQuery.parseJSON(lines[i]));
+            };
+        };
+    });
+}
 
-reader.onload = function(e) {
-    var lines = reader.result.split('\n');
-    for(var line = 0; line < lines.length; line++){
-      console.log(lines[line]);
-    }
-  //registeredReports.push(JSON.parse(text));
-};
+function parseImage(imgString) {
+    return "<img alt='' class='reportImage' src='data:image/jpeg;base64,"+ imgString+ "'/>";
+}
+function createContentString(descriptionString, timeStamp, imgString) {
+    return "Description: "+descriptionString+"\n"+"Time: "+timeStamp+"\n"+imgString;
+}
 
-var file = new File("../server/data");
-reader.readAsText(file);
+setInterval(recieveServerData, 2000);
 
-for (var i = registeredReports.length - 1; i >= 0; i--) {
-    console.log(registeredReports[i]);
-};
+setInterval(placeMarkersOnMap, 3000);
