@@ -1,0 +1,39 @@
+/**
+ * Status Page
+ */
+.status-page {
+  margin: 80px auto;
+  width: $content-width;
+  @extend %clearfix;
+  
+  .status-map {
+    float: left;
+  
+    .status-title {
+      color: $accent-color;
+    }
+  }
+  
+  .status-rapport {
+    float: left;
+    margin: 80px;
+    
+    .rapported-near-you {
+      color: $accent-color;
+    }
+    
+    .other-events {
+      margin-top: 80px;
+    
+      .rapported-other {
+        color: $accent-color;
+        opacity: .4;
+      }
+    }
+  }
+}
+#map {
+  width: 500px;
+  height: 400px;
+  background-color: gray;
+}
