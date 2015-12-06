@@ -22,23 +22,37 @@
     </header>
 
 
-    <div class="status-page">
-      <div class="status-rapport">
-        <h2 class="status-title">Just nu nära dig:</h2>
-        <h1 class="status-text">Läget är lugnt!</h1>
+    <section class="status-page">
+    
+      <div class="status-map">
+      
+        <h2 class="status-title">Just nu:</h2>
         <img class="map" src="assets/images/Sverigekarta-Landskap.svg" alt="Karta över Sverige">
       </div>
   
-      <div class="other-events">
-        <h2>Övriga katastrofer</h2>
-        <p>Malmö - Storm</p>
-        <p>Svealand - Storm</p>
+      <div class="status-rapport">
+      
+        <!--<h1 class="status-text">Läget är lugnt!</h1>-->
+      
+        <div class="events">
+          
+          <div class="near-you">
+            <h2>Nära dig:</h2>
+            <h2 class="rapported-near-you">INGA RAPPORTERADE KATASTROFER</h2>
+          </div>
+        
+          <div class="other-events">
+            <h2>Övriga Sverige:</h2>
+            <h2 class="rapported-other">SVEALAND - Stormen Gorm</h2>
+            <h2 class="rapported-other">ÖREBRO - Översväming</h2>
+          </div>
+        
+        </div>
       </div>
-      <div id="map"></div>
-    </div>
-
-    <section class="timeline">
+      
     </section>
+    
+    <div id="map"></div>
 
 
     <footer>
