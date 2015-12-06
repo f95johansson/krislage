@@ -65,7 +65,7 @@ public class LiveFeedAdapter extends BaseAdapter {
             if(i % 2 == 0 && i < 7){
                 data.iconId = R.drawable.polisen_logo_smallest;
             } else {
-                data.iconId = R.drawable.msb_small;
+                data.iconId = R.drawable.msb_mini;
             }
             data.text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
             liveData.add(data);
