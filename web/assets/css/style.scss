@@ -2,11 +2,25 @@
 
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,400italic);
+/*
+@font-face {
+    font-family: "DINCond-Regular";
+    src: url("assets/fonts/FF_DIN_Condensed_Regular.otf");
+}
+@font-face {
+    font-family: "DINCond-Medium";
+    src: url("assets/fonts/FF_DIN_Condensed_Medium.otf");
+}
+@font-face {
+    font-family: "DINCond-Bold";
+    src: url("assets/fonts/FF_DIN_Condensed_Bold.otf");
+}
+*/
 
 /**
  * Variables
  */
-$font-family: "Open Sans", sans-serif;
+$font-family: "Open Sans", serif;
 $font-weight:       400;
 $font-size-base:   14px;
 $font-size-small:  11px;

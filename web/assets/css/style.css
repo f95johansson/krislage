@@ -1,4 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,400italic);
+/*
+@font-face {
+    font-family: "DINCond-Regular";
+    src: url("assets/fonts/FF_DIN_Condensed_Regular.otf");
+}
+@font-face {
+    font-family: "DINCond-Medium";
+    src: url("assets/fonts/FF_DIN_Condensed_Medium.otf");
+}
+@font-face {
+    font-family: "DINCond-Bold";
+    src: url("assets/fonts/FF_DIN_Condensed_Bold.otf");
+}
+*/
 /**
  * Variables
  */
@@ -15,7 +29,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 400 14px "Open Sans", sans-serif;
+  font: 400 14px "Open Sans", serif;
   color: #eeeeee;
   background-color: #263238;
   width: 100%;
