@@ -15,6 +15,8 @@ import java.net.Socket;
  */
 public class NetworkCom {
 
+
+
     private static final String IP_ADDRESS  = "130.239.221.107";
     private static final int PORT           = 1337;
     private static Gson gson;
@@ -23,7 +25,10 @@ public class NetworkCom {
     private DataOutputStream outToServer;
     private BufferedReader inFromServer;
 
-    public NetworkCom() {
+    private ServerComService server;
+
+    public NetworkCom(ServerComService server) {
+        this.server = server;
         gson = new Gson();
     }
 
@@ -53,7 +58,11 @@ public class NetworkCom {
     public void sendMessage(EventInformation info){
         connect();
         try {
-            outToServer.writeBytes(gson.toJson(info));
+            if(outToServer != null){
+                outToServer.writeBytes(gson.toJson(info));
+            } else {
+                server.sendMsg(Codes.UNABLE_TO_SEND_DATA);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -26,7 +26,7 @@ public class ServerComService extends Service {
     public ServerComService() {
         mMessenger = new Messenger(new ParseUIMsg());
         msgSender = new SendUIMsg();
-        network = new NetworkCom();
+        network = new NetworkCom(this);
     }
 
     @Override
@@ -41,11 +41,15 @@ public class ServerComService extends Service {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case Codes.REG_CLIENT:
-                    mClients.add(msg.replyTo);
-                    msgSender.sendMsg(Codes.REG_CLIENT_SUCCESS);
+                    synchronized (mClients){
+                        mClients.add(msg.replyTo);
+                    }
+                    //msgSender.sendMsg(Codes.REG_CLIENT_SUCCESS);
                     break;
                 case Codes.UNREG_CLIENT:
-                    mClients.remove(msg.replyTo);
+                    synchronized (mClients){
+                        mClients.remove(msg.replyTo);
+                    }
                     break;
                 case Codes.SEND_DATA_TO_SERVER:
                     EventInformation info = msg.getData().getParcelable(Codes.EVENT_DATA);
@@ -56,29 +60,41 @@ public class ServerComService extends Service {
         }
     }
 
+    public void sendMsg(int code){
+        msgSender.sendMsg(code);
+    }
+
+    public void sendMsg(int code, Bundle bundle){
+        msgSender.sendMsg(code, bundle);
+    }
+
     private class SendUIMsg {
 
         public void sendMsg(int code){
-            Message msg = Message.obtain(null, code);
-            sendToClients(msg);
+            synchronized (mClients) {
+                Message msg = Message.obtain(null, code);
+                sendToClients(msg);
+            }
         }
 
         public void sendMsg(int code, Bundle bundle){
-            Message msg = Message.obtain(null, code);
-            msg.setData(bundle);
-            sendToClients(msg);
+            synchronized (mClients) {
+                Message msg = Message.obtain(null, code);
+                msg.setData(bundle);
+                sendToClients(msg);
+            }
         }
 
         private void sendToClients(Message msg){
-            synchronized (mClients){
-                for (Messenger msgC: mClients) {
-                    try {
-                        msgC.send(msg);
-                    } catch (RemoteException e) {
-                        mClients.remove(msgC);
-                    }
+
+            for (Messenger msgC: mClients) {
+                try {
+                    msgC.send(msg);
+                } catch (RemoteException e) {
+                    mClients.remove(msgC);
                 }
             }
+
         }
 
     }

@@ -18,11 +18,13 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 1;
 
-    private final Messenger mMessenger = new Messenger(new IncomingHandler());
+    private Messenger mMessenger;
     private boolean isBound;
     private Messenger mService = null;
     private ImageView iv;
@@ -50,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mMessenger = new Messenger(new IncomingHandler());
         isBound = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mImageView = (ImageView)findViewById(R.id.pictureContent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 dispatchTakePictureIntent();
+
 
                 /*
                 Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         event.setPhoto(imageDataString);
         Bundle b = new Bundle();
         b.putParcelable(Codes.EVENT_DATA, event);
+
         sendMsg(Codes.SEND_DATA_TO_SERVER, b);
 
         /*
@@ -209,58 +213,6 @@ public class MainActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         galleryAddPic();
-
-        /*
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            //iv.setImageBitmap(imageBitmap);
-            mImageView.setImageBitmap(imageBitmap);
-
-            EventInformation event = new EventInformation();
-            //event.setPhoto(imageBitmap.);
-            event.setText("This is a funny discription");
-            Bundle b = new Bundle();
-            b.putParcelable(Codes.EVENT_DATA, event);
-            sendMsg(Codes.SEND_DATA_TO_SERVER, b);
-        }
-
-*/
-       // System.out.println(iv.toString());
-        /*if(resultCode != RESULT_CANCELED){
-            if (requestCode == RESULT_OK) {
-                Bitmap bp = (Bitmap) data.getExtras().get("data");
-                iv.setImageBitmap(bp);
-                System.out.println("Testsssssss");
-            }
-            System.out.println("HEHE");
-        }
-        System.out.println("Yepppp");*/
-
-        /*
-        System.out.println("PICTURE! --->");
-        try {
-            URL url = new URL(outPutfileUri.getPath());
-            InputStream stream = url.openStream();
-            BufferedInputStream buffer = new BufferedInputStream(stream);
-            byte[] bytes = new byte[1024];
-            StringBuilder picBuild = new StringBuilder();
-            while(buffer.read(bytes) != -1){
-                picBuild.append(bytes);
-            }
-
-            picture = picBuild.toString();
-
-            System.out.println(picture);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
-
     }
 
     @Override
@@ -272,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStop(){
-        //doUnbindService();
+        doUnbindService();
         super.onStop();
     }
 
@@ -299,12 +251,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class IncomingHandler extends Handler {
+
         @Override
         public void handleMessage(Message msg){
             Bundle b = new Bundle();
 
             switch (msg.what){
                 case Codes.REG_CLIENT_SUCCESS:
+                    break;
+                case Codes.UNABLE_TO_SEND_DATA:
+                    /*
+                    Snackbar.make(viewGroup, "Unable to send data to server", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
                     break;
             }
         }
