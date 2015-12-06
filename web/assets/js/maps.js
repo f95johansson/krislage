@@ -2,8 +2,9 @@ function initialize() {
         var mapCanvas = document.getElementById('map');
         var mapOptions = {
           center: new google.maps.LatLng(63.8224668, 20.307477499999997),
-          zoom: 10,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          styles: MapStyles,
         }
         map = new google.maps.Map(mapCanvas, mapOptions);
 }
@@ -27,7 +28,8 @@ function placeMarkersOnMap(){
             position: latLng,
             map: map,
             title: 'Umeå universitet '+i,
-            infowindow: myInfowindow
+            infowindow: myInfowindow,
+            icon: 'assets/js/pin.png'
         });
         
         google.maps.event.addListener(marker, 'click', function() {
