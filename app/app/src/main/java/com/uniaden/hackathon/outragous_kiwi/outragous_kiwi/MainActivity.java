@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,17 +17,26 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 
 import android.util.Base64;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,7 +44,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -50,8 +58,14 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mImageView;
     private String mCurrentPhotoPath;
 
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+
+    private ImageView pictureFrame;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         mMessenger = new Messenger(new IncomingHandler());
         isBound = false;
         super.onCreate(savedInstanceState);
@@ -59,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        pictureFrame = (ImageView)mViewPager.findViewById(R.id.pictureFrame);
+        //pictureFrame.setImageDrawable(getDrawable(R.drawable.frontpage_app));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -73,25 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 dispatchTakePictureIntent();
-
-
-                /*
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = new File(Environment.getExternalStorageDirectory(),
-                        "MyPhoto.jpg");
-                outPutfileUri = Uri.fromFile(file);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri);
-                startActivityForResult(intent, 1);
-
-
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }*/
-
-
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
     }
@@ -141,9 +147,6 @@ public class MainActivity extends AppCompatActivity {
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
-        //Uri contentUri = Uri.fromFile(f);
-        //mediaScanIntent.setData(contentUri);
-        //this.sendBroadcast(mediaScanIntent);
 
         String imageDataString = "";
         try {
@@ -167,25 +170,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         EventInformation event = new EventInformation();
-        event.setText("This is a funny discription");
+        event.setText("#Groupie");
         event.setPhoto(imageDataString);
         Bundle b = new Bundle();
         b.putParcelable(Codes.EVENT_DATA, event);
 
+        LinearLayout inputContent = (LinearLayout)findViewById(R.id.inputfield);
+        inputContent.setBackgroundColor(getColor(R.color.colorBackground));
+
         sendMsg(Codes.SEND_DATA_TO_SERVER, b);
 
-        /*
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(f.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String lat = ExifInterface.TAG_GPS_LATITUDE;
-        String lat_data = exif.getAttribute(lat);
-
-        System.out.println(lat_data);
-        */
     }
 
     /**
@@ -328,4 +322,98 @@ public class MainActivity extends AppCompatActivity {
             isBound = false;
         }
     };
+
+
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+        private int section;
+
+        public PlaceholderFragment() {
+        }
+
+        public PlaceholderFragment(int section) {
+            this.section = section;
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = null;
+            fragment = new PlaceholderFragment(sectionNumber);
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+
+
+
+
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = null;
+            if(section == 1){
+                rootView = inflater.inflate(R.layout.fragment_page_1, container, false);
+            } else if (section == 2){
+                rootView = inflater.inflate(R.layout.fragment_page_2, container, false);
+                ListView list = (ListView)rootView.findViewById(R.id.listView);
+                list.setAdapter(new LiveFeedAdapter(getContext()));
+
+            } else if (section == 3){
+                rootView = inflater.inflate(R.layout.fragment_page_3, container, false);
+            }
+
+            return rootView;
+        }
+
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            return PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "SECTION 1";
+                case 1:
+                    return "SECTION 2";
+                case 2:
+                    return "SECTION 3";
+            }
+            return null;
+        }
+    }
 }
