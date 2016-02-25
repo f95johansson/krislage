@@ -17,7 +17,7 @@ public class NetworkCom {
 
 
 
-    private static final String IP_ADDRESS  = "130.239.233.104";
+    private static final String IP_ADDRESS  = "192.168.0.152";
     private static final int PORT           = 1337;
     private static Gson gson;
 

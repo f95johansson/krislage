@@ -16,6 +16,6 @@ function createContentString(descriptionString, timeStamp, imgString) {
     return "<p><b>Description:</b> "+descriptionString+"<br>"+"<b>Time:</b> "+timeStamp+"</p>\n"+imgString;
 }
 
-setInterval(recieveServerData, 2000);
+setInterval(recieveServerData, 500);
 
-setInterval(placeMarkersOnMap, 3000);
+setInterval(placeMarkersOnMap, 600);
