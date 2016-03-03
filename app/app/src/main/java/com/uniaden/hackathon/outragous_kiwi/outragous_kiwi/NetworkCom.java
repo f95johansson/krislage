@@ -15,10 +15,8 @@ import java.net.Socket;
  */
 public class NetworkCom {
 
-
-
-    private static final String IP_ADDRESS  = "130.239.233.104";
-    private static final int PORT           = 1337;
+    private static String IP_ADDRESS;
+    private static int PORT;
     private static Gson gson;
 
     private Socket socket;
@@ -28,6 +26,8 @@ public class NetworkCom {
     private ServerComService server;
 
     public NetworkCom(ServerComService server) {
+        IP_ADDRESS = Codes.DEFAULT_IP;
+        PORT = Codes.DEFAULT_PORT;
         this.server = server;
         gson = new Gson();
     }
@@ -68,5 +68,13 @@ public class NetworkCom {
         }
 
         disconnect();
+    }
+
+    public static void setIpAddress(String ipAddress) {
+        IP_ADDRESS = ipAddress;
+    }
+
+    public static void setPORT(int PORT) {
+        NetworkCom.PORT = PORT;
     }
 }

@@ -55,6 +55,16 @@ public class ServerComService extends Service {
                     EventInformation info = msg.getData().getParcelable(Codes.EVENT_DATA);
                     network.sendMessage(info);
                     break;
+                case Codes.SET_IP_ADDRESS:
+                    String ip = msg.getData().getString(Codes.IP_ADDRESS);
+                    System.out.println(ip);
+                    network.setIpAddress(ip);
+                    break;
+                case Codes.SET_PORT:
+                    int port = msg.getData().getInt(Codes.PORT);
+                    System.out.println(port + "");
+                    network.setPORT(port);
+                    break;
             }
 
         }

@@ -2,8 +2,10 @@ package com.uniaden.hackathon.outragous_kiwi.outragous_kiwi;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -17,7 +19,6 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity{
 
     private ImageView pictureFrame;
 
+
+    private String ipAddress;
+    private String portAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,6 +90,9 @@ public class MainActivity extends AppCompatActivity{
 
         pictureFrame = (ImageView)mViewPager.findViewById(R.id.pictureFrame);
         //pictureFrame.setImageDrawable(getDrawable(R.drawable.frontpage_app));
+
+        ipAddress = Codes.DEFAULT_IP;
+        portAddress = Codes.DEFAULT_PORT_STRING;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -234,14 +243,23 @@ public class MainActivity extends AppCompatActivity{
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
+        //int id = item.getItemId();
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+        */
 
-        return super.onOptionsItemSelected(item);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        System.out.println("pressed menu stuff");
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openNetworkInputPopup();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     class IncomingHandler extends Handler {
@@ -415,5 +433,69 @@ public class MainActivity extends AppCompatActivity{
             }
             return null;
         }
+    }
+
+
+    private void openNetworkInputPopup(){
+
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(this.getApplicationContext());
+        View promptsView = li.inflate(R.layout.network_input_popup, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                MainActivity.this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText ip_address = (EditText) promptsView
+                .findViewById(R.id.ipText);
+        ip_address.setText(ipAddress);
+
+        final EditText port = (EditText) promptsView
+                .findViewById(R.id.portText);
+        port.setText(this.portAddress);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                Bundle b;
+                                // get user input and set it to result
+                                // edit text
+                                String ip = ip_address.getText().toString();
+                                if(!ip.equals("")){
+                                    b = new Bundle();
+                                    b.putString(Codes.IP_ADDRESS, ip);
+
+                                    sendMsg(Codes.SET_IP_ADDRESS, b);
+                                    ipAddress = ip;
+                                }
+
+                                String stringPort = port.getText().toString();
+                                if(!stringPort.equals("")){
+                                    int port = Integer.parseInt(stringPort);
+                                    b = new Bundle();
+                                    b.putInt(Codes.PORT, port);
+
+                                    sendMsg(Codes.SET_PORT, b);
+                                    portAddress = stringPort;
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }
