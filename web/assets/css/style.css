@@ -183,7 +183,7 @@ header {
   .status-page .status-rapport {
     float: left;
     margin: 80px; }
-    .status-page .status-rapport .rapported-near-you {
+    .status-page .status-rapport .rapported-near-you a {
       color: #fa9f42; }
     .status-page .status-rapport .other-events {
       margin-top: 80px; }
@@ -207,5 +207,14 @@ header {
     float: left;
     width: 200px; }
 
-#totally-calid-coding {
-  position: absolute; }
+#back-button {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  z-index: 11;
+  top: 14px;
+  left: 90px; }
+
+#totally-valid-coding {
+  position: absolute;
+  max-width: 1280px !important; }

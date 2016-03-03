@@ -14,7 +14,7 @@ import java.net.Socket;
  * Created by Isak on 05/12/15.
  */
 public class NetworkCom {
-
+    
     private static String IP_ADDRESS;
     private static int PORT;
     private static Gson gson;
