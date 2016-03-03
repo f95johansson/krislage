@@ -1,5 +1,6 @@
+
 var registeredReports = [];
-var coordinates = {lat: 63.825689246915395, lng: 20.264078378677368, content: "This is more content"};
+var coordinates = {lat: 0, lng: 0, content: "This is more content"};
 var map;
 
 var MapStyles = [
